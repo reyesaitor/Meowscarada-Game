@@ -1,37 +1,41 @@
 import java.awt.*;
 
 public class Player {
-    private int x, y;
-    private final int ANCHO = 50, ALTO = 10;
-    private int VELOCIDAD = 5;
+    private double x, y;
+    private final double ANCHO_RATIO = 0.05, ALTO_RATIO = 0.02;
+    private double VELOCIDAD_RATIO = 0.01;
 
-    public Player(int x, int y) {
+    public Player(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
     public void moverIzquierda() {
         if (x > 0) {
-            x -= VELOCIDAD;
+            x = Math.max(0, x - VELOCIDAD_RATIO);
         }
     }
 
     public void moverDerecha() {
         if (x < 750) {
-            x += VELOCIDAD;
+            x = Math.min(1 - ANCHO_RATIO, x + VELOCIDAD_RATIO);
         }
     }
 
-    public void dibujar(Graphics g, Color color) {
+    public void dibujar(Graphics g, Color color, int ancho, int alto) {
         g.setColor(color);
-        g.fillRect(x, y, ANCHO, ALTO);
+        int playerAncho = (int) (ancho * ANCHO_RATIO);
+        int playerAlto = (int) (alto * ALTO_RATIO);
+        int playerX = (int) (x * ancho);
+        int playerY = (int) (y * alto);
+        g.fillRect(playerX, playerY, playerAncho, playerAlto);
     }
     
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
