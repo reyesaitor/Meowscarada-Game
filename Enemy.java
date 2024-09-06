@@ -3,14 +3,16 @@ import java.awt.*;
 public class Enemy {
     private int x; 
     private int y; 
-    private int velocidadX = 5;
-    private int velocidadY = 40;
+    private int velocidadX;
+    private int velocidadY;
     private int ancho = 30;
     private int alto = 30; 
 
     public Enemy(int x, int y, int velocidadEnemigosBase) {
         this.x = x;
         this.y = y;
+        this.velocidadX = velocidadEnemigosBase;
+        this.velocidadY = 40;
     }
 
     public void mover() {
