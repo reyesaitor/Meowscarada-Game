@@ -8,7 +8,7 @@ public class Enemy {
     private int ancho = 30;
     private int alto = 30; 
 
-    public Enemy(int x, int y) {
+    public Enemy(int x, int y, int velocidadEnemigosBase) {
         this.x = x;
         this.y = y;
     }

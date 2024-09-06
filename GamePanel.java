@@ -26,6 +26,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     private final int LIMITE_Y = 50;
 
+    private int nivelActual;
+    private int velocidadEnemigosBase = 5;
+
     public GamePanel() {
         setBackground(Color.BLACK);
         setFocusable(true);
@@ -37,6 +40,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         proyectiles = new ArrayList<>();
 
         //Inicializar enemigos
+        nivelActual = 1;
         generarEnemigos();
        
         timer = new Timer(16, this); //60 fps aprox
@@ -54,8 +58,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     }
 
     private void generarEnemigos() {
-        for(int i = 0; i < 5; i++) {
-            enemies.add(new Enemy(50 + i * 100, 50));
+        int numeroEnemigos = 5 + (nivelActual - 1) * 2;
+        for(int i = 0; i < numeroEnemigos; i++) {
+            int velocidadEnemigos = velocidadEnemigosBase + nivelActual;
+            enemies.add(new Enemy(50 + (i % 5) * 100, 50 + (i / 5) * 40, velocidadEnemigos));
         }
     }
 
@@ -86,6 +92,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             }
         }
         colisionDetect();
+
+        if (enemies.isEmpty()) {
+            nivelActual++;
+            generarEnemigos();
+        }
+
         repaint();
     }
 
@@ -137,6 +149,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.setFont(new Font("Arial", Font.BOLD, 20));
         g.drawString("SCORE: " + puntuacion, 10, 20);
         g.drawString("LIFE: " + vidas, 10, 40);
+        g.drawString("LV: " + nivelActual, 10, 60);
+
 
         if (gameOver) {
             g.setFont(new Font("Arial", Font.BOLD, 36));
